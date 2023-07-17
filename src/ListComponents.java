@@ -1,13 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ListComponents extends JFrame {
-    private JLabel myList;
-    private JTextField field;
-    private JCheckBox checkBox;
-    private Font font;
-    private JButton buttonAdd;
-    private ImageIcon imageCheckBox;
+    private static JLabel myList;
+    private static JTextField field;
+    private static JCheckBox checkBox;
+    private static Font font;
+    private static JButton buttonAdd;
+    private static ImageIcon imageCheckBox;
     public ListComponents(){
         super("List of tasks");
         setLayout(null);
@@ -19,6 +21,7 @@ public class ListComponents extends JFrame {
         myList.setFont(font);
 
         field = new JTextField();
+        field.setBackground(Color.red);
         field.setBounds(115, 50, 320,60);
         field.setFont(font);
 
@@ -41,10 +44,39 @@ public class ListComponents extends JFrame {
         buttonAdd = new JButton("+");
         buttonAdd.setFont(font);
         buttonAdd.setBounds(450, 50, 60, 60);
+        buttonAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JTextField newTextField = new JTextField();
+                newTextField.setBackground(Color.red);
+                newTextField.setBounds(115, field.getY() + 70, 320 ,60);
+                newTextField.setFont(font);
 
+                JCheckBox newCheckBox = new JCheckBox();
+                newCheckBox.setBounds(50, checkBox.getY() + 70, 60,60);
+                newCheckBox.setIcon(imageCheckBox);
+                newCheckBox.addItemListener(ex -> {
+                    if (newCheckBox.isSelected()) {
+                        newCheckBox.setIcon(new ImageIcon("src/imgAct.jpg"));
+                        newTextField.setBackground(Color.green);
+                    } else {
+                        newCheckBox.setIcon(new ImageIcon("src/img.jpg"));
+                        newTextField.setBackground(Color.red);
+                    }
+                });
+                field = newTextField;
+                checkBox = newCheckBox;
+                add(field);
+                add(checkBox);
+
+                revalidate();
+                repaint();
+            }
+        });
         add(myList);
         add(field);
         add(checkBox);
         add(buttonAdd);
+
     }
 }
