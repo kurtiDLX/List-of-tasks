@@ -18,7 +18,19 @@ public class ListComponents extends JFrame {
         field.setBounds(115, 50, 320,60);
         field.setFont(font);
 
+        JCheckBox checkBox = new JCheckBox();
+        checkBox.setSelected(false);
+        checkBox.setBounds(115, 100, 320,60);
+        checkBox.addItemListener(e -> {
+                    if (checkBox.isSelected()) {
+                        field.setBackground(Color.green);
+                    } else {
+                        field.setBackground(Color.RED);
+                    }
+                });
+
         add(myList);
         add(field);
+        add(checkBox);
     }
 }
